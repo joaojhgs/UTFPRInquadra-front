@@ -7,6 +7,7 @@ import { ClipboardList } from 'tabler-icons-react';
 import { Modal } from 'antd';
 import Login from './login';
 import Registro from './registro';
+import NewReservation from './newReservation';
 
 const FooterBar = ({
     setCollapsed,
@@ -20,6 +21,7 @@ const FooterBar = ({
     const [activeTab, setActiveTab] = useState('home');
     const [loginVisible, setLoginVisible] = useState(false);
     const [registerVisible, setRegisterVisible] = useState(false);
+    const [newReservationVisible, setNewReservationVisible] = useState(false);
     const [, setScrollLocked] = useScrollLock();
     const router = useRouter();
     const { decodedToken } = useContext(UserContext);
@@ -96,15 +98,8 @@ const FooterBar = ({
     }, [router]);
 
     const search = () => {
-        const input = document.getElementById('search');
-        input?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-            inline: 'center',
-        });
-        setTimeout(() => {
-            input?.focus();
-        }, 560);
+        router.push('/reservations')
+        setNewReservationVisible(true);
     };
 
     return (
@@ -117,7 +112,7 @@ const FooterBar = ({
                     strokeWidth={2}
                     color={'black'}
                     className="mx-auto"
-                    onClick={() => handleRedirect('/')}
+                    onClick={() => handleRedirect('/reservations')}
                 />
                 <label
                     className={`text-[10px] ${activeTab === 'home' ? 'text-primary' : 'text-gray'
@@ -165,6 +160,9 @@ const FooterBar = ({
             </Modal>
             <Modal open={registerVisible} onCancel={() => { setRegisterVisible(false) }} footer>
                 <Registro setModalVisibility={setRegisterVisible} setLoginVisbility={setLoginVisible} />
+            </Modal>
+            <Modal open={newReservationVisible} onCancel={() => { setNewReservationVisible(false) }} footer>
+                <NewReservation setModalVisibility={setNewReservationVisible} />
             </Modal>
         </div>
     );
