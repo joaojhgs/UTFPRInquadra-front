@@ -25,17 +25,6 @@ const Providers = ({
         }
     }, []);
 
-    useEffect(() => {
-        if (decodedToken) {
-            if (decodedToken.exp < Date.now() / 1000) {
-                setDecodedToken(null);
-                localStorage.removeItem('token');
-                router.push(`/`);
-            }
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [decodedToken]);
-
     return (
         <ConfigProvider locale={{ locale: 'pt' }}>
             <UserContext.Provider value={userProviderValue}>

@@ -24,11 +24,12 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       >
         {children}
       </Layout>
-      <FooterBar />
-      <Drawer title="Basic Drawer" placement="right" onClose={() => setCollapsed(false)} open={collapsed}>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+      <FooterBar setCollapsed={setCollapsed} collapsed={collapsed} />
+      <Drawer title="Menu" placement="right" onClose={() => setCollapsed(false)} open={collapsed}>
+        <button onClick={() => {
+          localStorage.removeItem('token');
+          setCollapsed(false);
+        }}><p className="text-danger font-bold">Logout</p></button>
       </Drawer>
     </Layout>
   )

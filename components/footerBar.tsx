@@ -1,24 +1,33 @@
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
 import { Home, Menu2, PlaylistAdd, Search, Ticket, User, UserCircle } from 'tabler-icons-react';
 import { useScrollLock } from '@mantine/hooks';
 import UserContext from '../contexts/user';
 import { ClipboardList } from 'tabler-icons-react';
 import { Modal } from 'antd';
 import Login from './login';
+import Registro from './registro';
 
 const FooterBar = ({
+    setCollapsed,
+    collapsed,
 }: {
+    setCollapsed: Dispatch<SetStateAction<boolean>>,
+    collapsed: boolean,
 }) => {
     const lastScrollTop = useRef<number>(0);
     const [size, setSize] = useState('h-[52px]');
     const [activeTab, setActiveTab] = useState('home');
     const [loginVisible, setLoginVisible] = useState(false);
-    const [accountOverlayVisible, setAccountOverlayVisible] =
-        useState<boolean>(false);
+    const [registerVisible, setRegisterVisible] = useState(false);
     const [, setScrollLocked] = useScrollLock();
     const router = useRouter();
     const { decodedToken } = useContext(UserContext);
+
+    useEffect(() => {
+        console.log(decodedToken);
+
+    }, [decodedToken])
 
     const handleScroll = () => {
         const st = window.scrollY || document.documentElement.scrollTop;
@@ -26,8 +35,7 @@ const FooterBar = ({
             if (window.innerHeight + st >= document.body.scrollHeight) {
                 setSize('h-[52px]'); // up
             } else {
-                console.log('down')
-                setSize('h-[0]'); // down
+                setSize('h-[0px]'); // down
             }
         } else {
             setSize('h-[52px]'); // up
@@ -35,11 +43,10 @@ const FooterBar = ({
         lastScrollTop.current = st <= 0 ? 0 : st;
     };
     const handleResize = () => {
-        setSize('h-0');
+        setSize('h-0px');
     };
 
     const handleRedirect = (path: string) => {
-        setAccountOverlayVisible(false);
         //Erro ta nesse if
         if (router.asPath.indexOf('?') >= 0) {
             if (
@@ -52,11 +59,6 @@ const FooterBar = ({
             router.push(path);
         }
     };
-
-    useEffect(() => {
-        setScrollLocked(accountOverlayVisible);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [accountOverlayVisible]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll, false);
@@ -136,37 +138,33 @@ const FooterBar = ({
             <div
                 className="my-auto text-center"
                 onClick={() => {
-                    if (decodedToken) {
-                        setAccountOverlayVisible(!accountOverlayVisible);
+                    if (localStorage.getItem('token')) {
+                        setCollapsed(!collapsed);
                     } else {
                         setLoginVisible(!loginVisible);
                     }
                 }}
             >
-                {!decodedToken ? (
-                    <div>
-                        <UserCircle
-                            size={30}
-                            color={`${activeTab === 'account' ? '#FFD354' : 'black'}`}
-                            className="mx-auto"
-                            strokeWidth={2}
-                        />
-                        <label
-                            className={`text-[10px] ${activeTab === 'account' ? 'text-primary' : 'text-gray'
-                                }`}
-                        >
-                            Conta
-                        </label>
-                    </div>
-                ) : (
-                    <div>
-                        <Menu2 size={30} color="gray" className="mx-auto" />
-                        <label className="text-[10px] text-gray">Menu</label>
-                    </div>
-                )}
+                <div>
+                    <UserCircle
+                        size={30}
+                        color={`${activeTab === 'account' ? '#FFD354' : 'black'}`}
+                        className="mx-auto"
+                        strokeWidth={2}
+                    />
+                    <label
+                        className={`text-[10px] ${activeTab === 'account' ? 'text-primary' : 'text-gray'
+                            }`}
+                    >
+                        Conta
+                    </label>
+                </div>
             </div>
-            <Modal open={loginVisible} onCancel={() => {setLoginVisible(false)}} footer>
-                <Login setModalVisibility={setLoginVisible} />
+            <Modal open={loginVisible} onCancel={() => { setLoginVisible(false) }} footer>
+                <Login setModalVisibility={setLoginVisible} setRegisterVisbility={setRegisterVisible} />
+            </Modal>
+            <Modal open={registerVisible} onCancel={() => { setRegisterVisible(false) }} footer>
+                <Registro setModalVisibility={setRegisterVisible} setLoginVisbility={setLoginVisible} />
             </Modal>
         </div>
     );
