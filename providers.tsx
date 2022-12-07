@@ -37,7 +37,7 @@ const Providers = ({
     }, [decodedToken]);
 
     return (
-        <ConfigProvider locale={{ locale: 'en' }}>
+        <ConfigProvider locale={{ locale: 'pt' }}>
             <UserContext.Provider value={userProviderValue}>
                 {children}
             </UserContext.Provider>

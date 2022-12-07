@@ -46,7 +46,12 @@ export default function Home() {
       <div className='w-[100%] flex justify-center'>
         <p className='text-[22px] font-bold w-[100%] md:w-[70vw]'>Próximas reservas</p>
       </div>
-      <div className='flex flex-wrap justify-center md:justify-between w-[100%] md:w-[70vw] mx-auto'>
+      <div className='flex flex-wrap justify-center md:justify-start w-[100%] md:w-[70vw] mx-auto'>
+        <Card title="14/02 - 18:30" bordered={false} className="my-2 w-[100%] max-w-[300px]">
+          <p>Quadra: Arena UTPFR</p>
+          <p>Esporte: Futebol</p>
+          <Button type="primary" size='small' className='bg-[#1677ff] my-2'>Ver mais</Button>
+        </Card>
         <Card title="14/02 - 18:30" bordered={false} className="my-2 w-[100%] max-w-[300px]">
           <p>Quadra: Arena UTPFR</p>
           <p>Esporte: Futebol</p>
@@ -61,7 +66,12 @@ export default function Home() {
       <div className='w-[100%] flex justify-center'>
         <p className='text-[22px] font-bold w-[100%] md:w-[70vw]'>Suas reservas</p>
       </div>
-      <div className='flex flex-wrap justify-center md:justify-between w-[100%] md:w-[70vw] mx-auto'>
+      <div className='flex flex-wrap justify-center md:justify-start w-[100%] md:w-[70vw] mx-auto'>
+        <Card title="14/02 - 18:30" bordered={false} className="my-2 w-[100%] max-w-[300px]">
+          <p>Quadra: Arena UTPFR</p>
+          <p>Esporte: Futebol</p>
+          <Button type="primary" size='small' className='bg-[#1677ff] my-2'>Ver mais</Button>
+        </Card>
         <Card title="14/02 - 18:30" bordered={false} className="my-2 w-[100%] max-w-[300px]">
           <p>Quadra: Arena UTPFR</p>
           <p>Esporte: Futebol</p>

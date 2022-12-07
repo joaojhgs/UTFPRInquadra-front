@@ -166,7 +166,7 @@ const FooterBar = ({
                 )}
             </div>
             <Modal open={loginVisible} onCancel={() => {setLoginVisible(false)}} footer>
-                <Login />
+                <Login setModalVisibility={setLoginVisible} />
             </Modal>
         </div>
     );

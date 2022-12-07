@@ -33,6 +33,9 @@ const Login = ({ setModalVisibility }: { setModalVisibility: Dispatch<SetStateAc
     return (
         <div className="w-full h-full p-[10px]">
             <Form form={form} onFinish={handleFormSubmit}>
+                <Form.Item label="Email" name="email" required rules={[{ required: true }]}>
+                    <Input type="email" />
+                </Form.Item>
                 <Form.Item label="RA" name="ra" required rules={[{ required: true }]}>
                     <Input type="number" />
                 </Form.Item>
