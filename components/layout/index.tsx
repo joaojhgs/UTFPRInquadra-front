@@ -1,67 +1,37 @@
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-    UploadOutlined,
-    UserOutlined,
-    VideoCameraOutlined,
-  } from '@ant-design/icons';
-  import { Layout, Menu } from 'antd';
-  import React, { useState } from 'react';
-  const { Header, Sider, Content } = Layout;
-  
-  function MainLayout({children}: {children: React.ReactNode}) {
-    const [collapsed, setCollapsed] = useState(false);
-    return (
-        <Layout className="layout">
-          <Sider trigger={null} collapsible collapsed={collapsed}>
-            <div className="logo" />
-            <Menu
-                theme="dark"
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                items={[
-                  {
-                    key: '1',
-                    icon: <UserOutlined />,
-                    label: 'nav 1',
-                  },
-                  {
-                    key: '2',
-                    icon: <VideoCameraOutlined />,
-                    label: 'nav 2',
-                  },
-                  {
-                    key: '3',
-                    icon: <UploadOutlined />,
-                    label: 'nav 3',
-                  },
-                ]}
-            />
-          </Sider>
-          <Layout className="site-layout">
-            <Header
-                className="site-layout-background"
-                style={{
-                  padding: 0,
-                }}
-            >
-              {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                className: 'trigger',
-                onClick: () => setCollapsed(!collapsed),
-              })}
-            </Header>
-            <Content
-                className="site-layout-background"
-                style={{
-                  margin: '24px 16px',
-                  padding: 24,
-                }}
-            >
-              {children}
-            </Content>
-          </Layout>
-        </Layout>
-    )
-  }
+import { AiOutlineMenu } from "react-icons/ai";
+import { Drawer, Layout, Menu } from 'antd';
+import React, { useState } from 'react';
+import FooterBar from "../footerBar";
+const { Header, Sider, Content } = Layout;
 
-  export default MainLayout;
+function MainLayout({ children }: { children: React.ReactNode }) {
+  const [collapsed, setCollapsed] = useState(false);
+  return (
+    <Layout className="layout h-fit min-h-[100vh]">
+      <div className='hidden md:flex w-[100%] fixed top-0 left-0 bg-white h-[50px] z-[1000]'>
+        <div className='ml-auto w-[30px] h-[30px] text-[30px] my-auto mr-[10px]'>
+          <button onClick={() => setCollapsed(true)}>
+            <AiOutlineMenu color="black" />
+          </button>
+        </div>
+      </div>
+      <Layout
+      className="h-fit"
+        style={{
+          margin: '24px 16px',
+          padding: 24,
+        }}
+      >
+        {children}
+      </Layout>
+      <FooterBar />
+      <Drawer title="Basic Drawer" placement="right" onClose={() => setCollapsed(false)} open={collapsed}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </Drawer>
+    </Layout>
+  )
+}
+
+export default MainLayout;
