@@ -4,6 +4,8 @@ import { Home, Menu2, PlaylistAdd, Search, Ticket, User, UserCircle } from 'tabl
 import { useScrollLock } from '@mantine/hooks';
 import UserContext from '../contexts/user';
 import { ClipboardList } from 'tabler-icons-react';
+import { Modal } from 'antd';
+import Login from './login';
 
 const FooterBar = ({
 }: {
@@ -11,6 +13,7 @@ const FooterBar = ({
     const lastScrollTop = useRef<number>(0);
     const [size, setSize] = useState('h-[52px]');
     const [activeTab, setActiveTab] = useState('home');
+    const [loginVisible, setLoginVisible] = useState(false);
     const [accountOverlayVisible, setAccountOverlayVisible] =
         useState<boolean>(false);
     const [, setScrollLocked] = useScrollLock();
@@ -136,7 +139,7 @@ const FooterBar = ({
                     if (decodedToken) {
                         setAccountOverlayVisible(!accountOverlayVisible);
                     } else {
-                        handleRedirect('/user');
+                        setLoginVisible(!loginVisible);
                     }
                 }}
             >
@@ -162,6 +165,9 @@ const FooterBar = ({
                     </div>
                 )}
             </div>
+            <Modal open={loginVisible} onCancel={() => {setLoginVisible(false)}} footer>
+                <Login />
+            </Modal>
         </div>
     );
 };
