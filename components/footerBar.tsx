@@ -37,7 +37,7 @@ const FooterBar = ({
             if (window.innerHeight + st >= document.body.scrollHeight) {
                 setSize('h-[52px]'); // up
             } else {
-                setSize('h-[0px]'); // down
+                setSize('h-[0]'); // down
             }
         } else {
             setSize('h-[52px]'); // up
@@ -45,7 +45,7 @@ const FooterBar = ({
         lastScrollTop.current = st <= 0 ? 0 : st;
     };
     const handleResize = () => {
-        setSize('h-0px');
+        setSize('h-[0]');
     };
 
     const handleRedirect = (path: string) => {

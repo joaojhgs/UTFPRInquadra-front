@@ -7,6 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Calendar, Card, Carousel, Col, Descriptions, Grid, Layout, Menu, Row } from 'antd';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 const { Header, Sider, Content } = Layout;
 import requester from '../requester'
@@ -35,6 +36,7 @@ export interface IReservation {
 export default function Home() {
   const [reservations, setReservations] = useState<Array<IReservation>>([]);
   const [myReservations, setMyReservations] = useState<Array<IReservation>>([]);
+  const router = useRouter()
 
   useEffect(() => {
     requester.get(`${process.env.NEXT_PUBLIC_API_URL}/reservations`).then(data => {
@@ -79,7 +81,7 @@ export default function Home() {
         {reservations.slice(0, 4).map((reservation, index) => <Card key={reservation.id} title={moment(reservation.startDateTime).format('DD/MM - HH:mm')} bordered={false} className="my-2 w-[100%] max-w-[300px]">
           <p>Quadra: {reservation?.court?.name}</p>
           <p>Esporte: {reservation?.sport?.name}</p>
-          <Button type="primary" size='small' className='bg-[#1677ff] my-2'>Ver mais</Button>
+          <Button type="primary" size='small' className='bg-[#1677ff] my-2' onClick={() => {router.push(`/reservation/${reservation.id}`)}}>Ver mais</Button>
         </Card>)}
       </div>
       {myReservations.length > 0 && <><div className='w-[100%] flex justify-center'>
@@ -88,7 +90,7 @@ export default function Home() {
           {myReservations.slice(0, 4).map((reservation, index) => <Card key={reservation.id} title={moment(reservation.startDateTime).format('DD/MM - HH:mm')} bordered={false} className="my-2 w-[100%] max-w-[300px]">
             <p>Quadra: {reservation?.court?.name}</p>
             <p>Esporte: {reservation?.sport?.name}</p>
-            <Button type="primary" size='small' className='bg-[#1677ff] my-2'>Ver mais</Button>
+            <Button type="primary" size='small' className='bg-[#1677ff] my-2' onClick={() => {router.push(`/reservation/${reservation.id}`)}}>Ver mais</Button>
           </Card>)}
         </div></>}
     </>

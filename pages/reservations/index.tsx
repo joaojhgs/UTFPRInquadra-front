@@ -5,17 +5,21 @@ import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs'
 import requester from '../../requester'
 import moment from "moment";
+import { useRouter } from "next/router";
 
-const ReservationCard = ({ reservation }: { reservation: IReservation }) => <Card key={reservation.id} title={moment(reservation.startDateTime).format('DD/MM - HH:mm')} bordered={false} className="my-2 w-[100%] max-w-[300px]">
-    <p>Quadra: {reservation?.court?.name}</p>
-    <p>Esporte: {reservation?.sport?.name}</p>
-    <Button type="primary" size='small' className='bg-[#1677ff] my-2'>Ver mais</Button>
-</Card>
 
 const Reservations = () => {
+    const router = useRouter()
     const [form] = Form.useForm();
     const [reservations, setReservations] = useState<Array<IReservation>>([]);
     const watchDatePicker: Dayjs = Form.useWatch('DatePicker', form);
+
+    const ReservationCard = ({ reservation }: { reservation: IReservation }) => <Card key={reservation.id} title={moment(reservation.startDateTime).format('DD/MM - HH:mm')} bordered={false} className="my-2 w-[100%] max-w-[300px]">
+    <p>Quadra: {reservation?.court?.name}</p>
+    <p>Esporte: {reservation?.sport?.name}</p>
+    <Button type="primary" size='small' className='bg-[#1677ff] my-2' onClick={() => {router.push(`/reservation/${reservation.id}`)}}>Ver mais</Button>
+</Card>
+
     useEffect(() => {
         requester.get(`${process.env.NEXT_PUBLIC_API_URL}/reservations`).then(data => {
             setReservations(data.data);
