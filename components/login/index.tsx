@@ -1,5 +1,5 @@
 import { Button, Form, Input, notification } from "antd";
-import jwtDecode from "jwt-decode";
+import jwtDecode, { JwtPayload } from "jwt-decode";
 import { Dispatch, SetStateAction, useContext } from "react";
 import UserContext, { IToken } from "../../contexts/user";
 import requester from '../../requester'
@@ -14,6 +14,7 @@ const Login = ({ setModalVisibility, setRegisterVisbility }: { setModalVisibilit
         values.ra = Number(values.ra);
         requester.post(`${process.env.NEXT_PUBLIC_API_URL}/login`, values).then(data => {
             localStorage.setItem('token', data.data);
+            setDecodedToken(jwtDecode<IToken & JwtPayload>(data.data));
             setModalVisibility(false)
             api.success({
                 message: `Sucesso`,
@@ -38,7 +39,7 @@ const Login = ({ setModalVisibility, setRegisterVisbility }: { setModalVisibilit
                     <Input.Password />
                 </Form.Item>
                 <div className="flex w-full">
-                    <span className="text-primary underline pointer-click my-auto" onClick={() =>{
+                    <span className="text-primary underline pointer-click my-auto" onClick={() => {
                         setModalVisibility(false);
                         setRegisterVisbility(true);
                     }}>Registrar-se</span>

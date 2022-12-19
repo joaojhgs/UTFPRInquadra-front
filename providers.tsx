@@ -10,11 +10,6 @@ const Providers = ({
     children: React.ReactNode;
 }): ReactElement => {
     const [decodedToken, setDecodedToken] = useState<IToken | undefined | null>();
-    const router = useRouter();
-    const userProviderValue = {
-        decodedToken,
-        setDecodedToken,
-    };
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -27,7 +22,10 @@ const Providers = ({
 
     return (
         <ConfigProvider locale={{ locale: 'pt' }}>
-            <UserContext.Provider value={userProviderValue}>
+            <UserContext.Provider value={{
+                decodedToken,
+                setDecodedToken,
+            }}>
                 {children}
             </UserContext.Provider>
         </ConfigProvider>

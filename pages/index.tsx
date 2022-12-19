@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -31,6 +33,24 @@ export interface IReservation {
     id: string
     name: string
   }
+  participants: {
+    created_at: string
+    reservation_id: string
+    user_id: string
+    user:{
+      name: string
+      email: string
+    }
+  }[]
+  requested_participants: {
+    created_at: string
+    reservation_id: string
+    user_id: string
+    user:{
+      name: string
+      email: string
+    }
+  }[]
 }
 
 export default function Home() {
@@ -81,7 +101,7 @@ export default function Home() {
         {reservations.slice(0, 4).map((reservation, index) => <Card key={reservation.id} title={moment(reservation.startDateTime).format('DD/MM - HH:mm')} bordered={false} className="my-2 w-[100%] max-w-[300px]">
           <p>Quadra: {reservation?.court?.name}</p>
           <p>Esporte: {reservation?.sport?.name}</p>
-          <Button type="primary" size='small' className='bg-[#1677ff] my-2' onClick={() => {router.push(`/reservation/${reservation.id}`)}}>Ver mais</Button>
+          <Button type="primary" size='small' className='bg-[#1677ff] my-2' onClick={() => { router.push(`/reservation/${reservation.id}`) }}>Ver mais</Button>
         </Card>)}
       </div>
       {myReservations.length > 0 && <><div className='w-[100%] flex justify-center'>
@@ -90,7 +110,7 @@ export default function Home() {
           {myReservations.slice(0, 4).map((reservation, index) => <Card key={reservation.id} title={moment(reservation.startDateTime).format('DD/MM - HH:mm')} bordered={false} className="my-2 w-[100%] max-w-[300px]">
             <p>Quadra: {reservation?.court?.name}</p>
             <p>Esporte: {reservation?.sport?.name}</p>
-            <Button type="primary" size='small' className='bg-[#1677ff] my-2' onClick={() => {router.push(`/reservation/${reservation.id}`)}}>Ver mais</Button>
+            <Button type="primary" size='small' className='bg-[#1677ff] my-2' onClick={() => { router.push(`/reservation/${reservation.id}`) }}>Ver mais</Button>
           </Card>)}
         </div></>}
     </>
