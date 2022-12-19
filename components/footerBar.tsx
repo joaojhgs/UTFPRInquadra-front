@@ -26,11 +26,6 @@ const FooterBar = ({
     const router = useRouter();
     const { decodedToken } = useContext(UserContext);
 
-    useEffect(() => {
-        console.log(decodedToken);
-
-    }, [decodedToken])
-
     const handleScroll = () => {
         const st = window.scrollY || document.documentElement.scrollTop;
         if (st > lastScrollTop?.current) {

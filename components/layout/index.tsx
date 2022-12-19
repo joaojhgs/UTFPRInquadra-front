@@ -12,7 +12,7 @@ const { Header, Sider, Content } = Layout;
 function MainLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
-  const { setDecodedToken } = useContext(UserContext)
+  const { setDecodedToken, decodedToken } = useContext(UserContext)
   return (
     <Layout className="layout h-fit min-h-[100vh]">
       <div className='flex justify-center w-[100%] fixed top-0 left-0 bg-white h-[50px] z-[1000]'>
@@ -39,11 +39,19 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       </Layout>
       <FooterBar setCollapsed={setCollapsed} collapsed={collapsed} />
       <Drawer title="Menu" placement="right" onClose={() => setCollapsed(false)} open={collapsed}>
-        <button onClick={() => {
-          localStorage.removeItem('token');
-          setDecodedToken(null);
-          setCollapsed(false);
-        }}><p className="text-danger font-bold">Logout</p></button>
+        <div>
+          {decodedToken?.role === 'ADMIN' && <button onClick={() => {
+            router.push('/admin');
+            setCollapsed(false);
+          }}><p className="text-danger font-bold">Painel de controle</p></button>}
+        </div>
+        <div>
+          <button onClick={() => {
+            localStorage.removeItem('token');
+            setDecodedToken(null);
+            setCollapsed(false);
+          }}><p className="text-danger font-bold">Logout</p></button>
+        </div>  
       </Drawer>
     </Layout>
   )

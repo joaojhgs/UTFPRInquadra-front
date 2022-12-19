@@ -5,10 +5,10 @@ import Providers from '../providers'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MainLayout>
-      <Providers>
+    <Providers>
+      <MainLayout>
         <Component {...pageProps} />
-      </Providers>
-    </MainLayout>
+      </MainLayout>
+    </Providers>
   )
 }
