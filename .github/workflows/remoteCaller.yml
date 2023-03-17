@@ -20,5 +20,5 @@ jobs:
               owner: 'joaojhgs',
               repo: 'changelogWorkflow',
               workflow_id: 'docker.yml',
-              ref: 'main',
+              ref: 'master',
             })
