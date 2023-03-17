@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Update all Core repositories to new ReadME template
+name: Trigger remote workflow
 
 # Controls when the workflow will run
 on:
