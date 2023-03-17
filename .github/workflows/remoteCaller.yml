@@ -21,7 +21,4 @@ jobs:
               repo: 'changelogWorkflow',
               workflow_id: 'docker.yml',
               ref: 'main',
-              inputs: {
-
-              }
             })
